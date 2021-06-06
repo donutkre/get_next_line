@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+void	*gnl_memset(void *s, int c, size_t n)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ void	*ft_memset(void *s, int c, size_t n)
 	return (s);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+void	*gnl_calloc(size_t count, size_t size)
 {
 	void	*ptr;
 	size_t	i;
@@ -30,7 +30,7 @@ void	*ft_calloc(size_t count, size_t size)
 	i = count * size;
 	ptr = malloc(i);
 	if (ptr)
-		ft_memset(ptr, 0, i);
+		gnl_memset(ptr, 0, i);
 	return (ptr);
 }
 
@@ -43,12 +43,12 @@ int	read_buf(int fd, char **backup)
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		return (-1);
-	while (ft_strchr(*backup, '\n') == NULL && read_size == BUFFER_SIZE)
+	while (gnl_strchr(*backup, '\n') == NULL && read_size == BUFFER_SIZE)
 	{
 		read_size = read(fd, buf, BUFFER_SIZE);
 		if (read_size < 0)
 			break ;
-		*backup = ft_strjoin(*backup, buf, read_size);
+		*backup = gnl_strjoin(*backup, buf, read_size);
 		if (*backup == NULL)
 		{
 			read_size = -1;
@@ -58,7 +58,7 @@ int	read_buf(int fd, char **backup)
 	free(buf);
 	if (read_size < 0)
 		return (-1);
-	if (ft_strchr(*backup, '\n') != NULL)
+	if (gnl_strchr(*backup, '\n') != NULL)
 		return (1);
 	return (0);
 }
@@ -69,10 +69,10 @@ char	*next_line(char **backup)
 	char		*tmp;
 	char		*newline;
 
-	newline = ft_strchr(*backup, '\n');
+	newline = gnl_strchr(*backup, '\n');
 	if (newline == NULL)
 	{
-		tmp = ft_strdup(*backup);
+		tmp = gnl_strdup(*backup);
 		free(*backup);
 		*backup = NULL;
 		return (tmp);
@@ -80,9 +80,9 @@ char	*next_line(char **backup)
 	line = (char *)malloc(sizeof(char) * (newline - *backup + 1));
 	if (!line)
 		return (NULL);
-	ft_strlcpy(line, *backup, newline - *backup + 1);
+	gnl_strlcpy(line, *backup, newline - *backup + 1);
 	tmp = *backup;
-	*backup = ft_strdup(++newline);
+	*backup = gnl_strdup(++newline);
 	if (*backup == NULL)
 		return (NULL);
 	free(tmp);
@@ -91,21 +91,21 @@ char	*next_line(char **backup)
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*s;
+	static char	*s[OPEN_MAX];
 	int			n;
 
 	n = 1;
-	if (fd < 0 || !line || BUFFER_SIZE <= 0)
+	if (fd < 0 || !line || BUFFER_SIZE <= 0 || fd >= OPEN_MAX)
 		return (-1);
-	if (ft_strchr(s, '\n') == NULL)
+	if (gnl_strchr(s[fd], '\n') == NULL)
 	{
-		n = read_buf(fd, &s);
+		n = read_buf(fd, &s[fd]);
 		if (n == -1)
 			return (-1);
 	}
 	if ((n == 1) || (n == 0))
 	{
-		*line = next_line(&s);
+		*line = next_line(&s[fd]);
 		if (*line == NULL)
 			return (-1);
 	}

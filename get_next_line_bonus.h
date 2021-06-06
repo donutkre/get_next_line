@@ -27,14 +27,14 @@
 #  define OPEN_MAX 1024
 # endif
 
-void	*ft_memset(void *s, int c, size_t n);
-void	*ft_calloc(size_t count, size_t size);
-char	*ft_strjoin(char *s1, char *s2, ssize_t num_read);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *s1);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *s);
+void	*gnl_memset(void *s, int c, size_t n);
+void	*gnl_calloc(size_t count, size_t size);
+char	*gnl_strjoin(char *s1, char *s2, ssize_t num_read);
+size_t	gnl_strlcpy(char *dst, const char *src, size_t size);
+char	*gnl_strchr(const char *s, int c);
+char	*gnl_strdup(const char *s1);
+char	*gnl_substr(char const *s, unsigned int start, size_t len);
+size_t	gnl_strlen(const char *s);
 int		get_next_line(int fd, char **line);
 
 #endif

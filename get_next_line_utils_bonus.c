@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	gnl_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t		len;
 	const char	*c;
@@ -40,10 +40,10 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	}
 	if (len == 0 && size != 0)
 		*dst = '\0';
-	return (ft_strlen(c));
+	return (gnl_strlen(c));
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	size_t			i;
 	size_t			len;
@@ -54,7 +54,7 @@ char	*ft_strchr(const char *s, int c)
 		return (NULL);
 	i = 0;
 	p = (unsigned char *)s;
-	len = ft_strlen(s);
+	len = gnl_strlen(s);
 	str = (unsigned char)c;
 	while (i <= len)
 	{
@@ -66,14 +66,14 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *s1)
+char	*gnl_strdup(const char *s1)
 {
 	char	*dst;
 	int		i;
 	int		len;
 
 	i = 0;
-	len = ft_strlen((char *)s1);
+	len = gnl_strlen((char *)s1);
 	dst = malloc(sizeof(char) * (len + 1));
 	if (!dst)
 		return (0);
@@ -86,7 +86,7 @@ char	*ft_strdup(const char *s1)
 	return (dst);
 }
 
-char	*ft_strjoin(char *s1, char *s2, ssize_t num_read)
+char	*gnl_strjoin(char *s1, char *s2, ssize_t num_read)
 {
 	size_t	i;
 	size_t	j;
@@ -94,8 +94,8 @@ char	*ft_strjoin(char *s1, char *s2, ssize_t num_read)
 
 	s2[num_read] = '\0';
 	if (!s1)
-		return (ft_strdup(s2));
-	str = ft_calloc(ft_strlen(s1) + ft_strlen(s2) + 1, sizeof(char));
+		return (gnl_strdup(s2));
+	str = ft_calloc(gnl_strlen(s1) + gnl_strlen(s2) + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	i = 0;
